@@ -5,8 +5,8 @@ import numpy as np
 
 # predefined constants
 PIPE_LENGTH = 20
-INITIAL_VELOCITY = 0.8
-NUM_SAMPLES = 20
+INITIAL_VELOCITY = 0.3
+NUM_SAMPLES = 30
 measurement_noise_covariance = np.diag(np.array([0.1, 0.1, 0.1])) 
 # predefined for simulation, would be calculated in real life
 
@@ -33,9 +33,9 @@ for i in range(NUM_SAMPLES):
     kalman_positions.append(kalman_filter.get_state_vector()[0])
     kalman_filter.kalman_update(noisy_impulse_responses[i])
 
-labels = ['Ground truth positions', 'Kalmann predicted positions']
-position_vectors = [ground_truth_positions, np.array(kalman_positions)]
+labels = ['Ground truth positions', 'Noisy Measurements', 'Kalmann predicted positions']
+position_vectors = [ground_truth_positions, noisy_impulse_responses[:, 0], np.array(kalman_positions)]
 
-visualization.compare_positions(position_vectors, [0.1, 0.1], labels)
+visualization.compare_positions(position_vectors, [0, 0.1, 0.1], labels)
 
 
